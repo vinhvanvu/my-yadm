@@ -1,3 +1,7 @@
+" Line number settings
+set number
+highlight LineNr term=bold cterm=NONE ctermfg=DarkGrey ctermbg=NONE gui=NONE guifg=DarkGrey guibg=NONE
+
 " Vim Key Bindings (START)
 let mapleader = ','
 
@@ -26,6 +30,10 @@ Plug 'preservim/nerdtree', { 'on': 'NERDTreeToggle' }
 Plug 'Xuyuanp/nerdtree-git-plugin', { 'on': 'NERDTreeToggle' }
 
 Plug 'junegunn/fzf', { 'on': 'FZF' }
+Plug 'christoomey/vim-tmux-navigator'
+Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
+Plug 'elzr/vim-json', { 'for': 'json' }
+Plug 'morhetz/gruvbox'
 
 call plug#end()
 " VimPlug (END)
@@ -33,15 +41,16 @@ call plug#end()
 "-------------------------------------------------------------------------------------------------"
 
 " Plugin Settings [FZF/RipGrep] (START)
-command! -bang -nargs=* Rg
-  \ call fzf#vim#grep(
-  \   'rg --column --line-number --no-heading --color=always --ignore-case --hidden '.shellescape(<q-args>), 1,
-  \   <bang>0 ? fzf#vim#with_preview('up:60%')
-  \           : fzf#vim#with_preview('right:50%:hidden', '?'),
-  \   <bang>0)
-
-nmap <leader>r "zyiw:exe"Rg ".@z.""<cr>
-nmap <leader>f :call fzf#vim#files('.', {'options':'--query '.expand('<cword>')})<CR>
+" command! -bang -nargs=* Rg
+"   \ call fzf#vim#grep(
+"   \   'rg --column --line-number --no-heading --color=always --ignore-case --hidden '.shellescape(<q-args>), 1,
+"   \   <bang>0 ? fzf#vim#with_preview('up:60%')
+"   \           : fzf#vim#with_preview('right:50%:hidden', '?'),
+"   \   <bang>0)
+" 
+" nmap <leader>r "zyiw:exe"Rg ".@z.""<cr>
+" nmap <leader>f :call fzf#vim#files('.', {'options':'--query '.expand('<cword>')})<CR>
 " Plugin Settings [FZF/RipGrep] (END)
 
 "-------------------------------------------------------------------------------------------------"
+

@@ -139,3 +139,13 @@ fi
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+
+# Load Angular CLI autocompletion.
+source <(ng completion script)
+
+# FZF Settings
+export FZF_DEFAULT_OPTS='--height 40% --reverse --border'
+export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow --glob "!{.git,node_modules,dist*,.yarn,.vscode,.angular}/*"'
+
+source /opt/homebrew/Cellar/fzf/0.38.0/shell/key-bindings.zsh
