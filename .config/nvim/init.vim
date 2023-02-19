@@ -34,6 +34,8 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'dense-analysis/ale'
 Plug 'tpope/vim-sleuth'
 Plug 'github/copilot.vim'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-commentary'
 
 Plug 'nvim-tree/nvim-web-devicons'
 Plug 'nvim-tree/nvim-tree.lua'

@@ -1,0 +1,29 @@
+font:
+  size: 14
+  offset: 
+    x: 2
+    y: 6
+  glyph_offset:
+    x: 2
+    y: 0
+  normal:
+    family: RobotoMono Nerd Font
+    style: Light
+  bold:
+    family: RobotoMono Nerd Font
+    style: Bold
+  italic:
+    family: RobotoMono Nerd Font
+    style: Light Italic
+  bold_italic:
+    family: RobotoMono Nerd Font
+    style: Bold Italic
+key_bindings:
+  - { key: H, mods: Alt, chars: "\x1bh," }
+  - { key: H, mods: Alt|Shift, chars: "\x1bH," }
+
+  - { key: L, mods: Alt, chars: "\x1bl" }
+  - { key: L, mods: Alt|Shift, chars: "\x1bL" }
+
+  - { key: X, mods: Alt, chars: "\x1bx," }
+  - { key: X, mods: Alt|Shift, chars: "\x1bX" }
