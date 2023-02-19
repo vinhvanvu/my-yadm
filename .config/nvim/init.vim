@@ -7,13 +7,17 @@ let mapleader = ','
 
 inoremap jk <Esc>
 
-nnoremap <C-n> :NERDTreeToggle<CR>
-nnoremap <c-p> :FZF<cr>
+nnoremap <C-n> :NvimTreeToggle<CR>
+nnoremap <C-p> :FZF<CR>
 
-inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-nnoremap <TAB>   :call SmartTab('bn')<cr>
-nnoremap <S-TAB> :call SmartTab('bp')<cr>
+nnoremap <silent> <A-h> <Cmd>BufferPrevious<CR>
+nnoremap <silent> <A-l> <Cmd>BufferNext<CR>
+
+nnoremap <silent> <A-H> <Cmd>BufferMovePrevious<CR>
+nnoremap <silent> <A-L> <Cmd>BufferMoveNext<CR>
+
+nnoremap <silent> <A-x> <Cmd>BufferClose<CR>
+nnoremap <silent> <A-X> <Cmd>BufferCloseAllButPinned<CR>
 
 nnoremap <leader>ev :vsplit $MYVIMRC<cr>
 nnoremap <leader>sv :source $MYVIMRC<cr>
@@ -26,31 +30,62 @@ nmap <leader>ss :source %<cr>
 " VimPlug (START)
 call plug#begin()
 
-Plug 'preservim/nerdtree', { 'on': 'NERDTreeToggle' }
-Plug 'Xuyuanp/nerdtree-git-plugin', { 'on': 'NERDTreeToggle' }
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'dense-analysis/ale'
+Plug 'tpope/vim-sleuth'
+Plug 'github/copilot.vim'
+
+Plug 'nvim-tree/nvim-web-devicons'
+Plug 'nvim-tree/nvim-tree.lua'
+Plug 'romgrk/barbar.nvim'
 
 Plug 'junegunn/fzf', { 'on': 'FZF' }
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
 Plug 'elzr/vim-json', { 'for': 'json' }
-Plug 'morhetz/gruvbox'
+Plug 'catppuccin/nvim', { 'as': 'catppuccin' }
 
 call plug#end()
 " VimPlug (END)
 
 "-------------------------------------------------------------------------------------------------"
 
-" Plugin Settings [FZF/RipGrep] (START)
-" command! -bang -nargs=* Rg
-"   \ call fzf#vim#grep(
-"   \   'rg --column --line-number --no-heading --color=always --ignore-case --hidden '.shellescape(<q-args>), 1,
-"   \   <bang>0 ? fzf#vim#with_preview('up:60%')
-"   \           : fzf#vim#with_preview('right:50%:hidden', '?'),
-"   \   <bang>0)
-" 
-" nmap <leader>r "zyiw:exe"Rg ".@z.""<cr>
-" nmap <leader>f :call fzf#vim#files('.', {'options':'--query '.expand('<cword>')})<CR>
-" Plugin Settings [FZF/RipGrep] (END)
+lua << EOF
+-- disable netrw at the very start of your init.lua (strongly advised)
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
 
-"-------------------------------------------------------------------------------------------------"
+-- set termguicolors to enable highlight groups
+-- vim.opt.termguicolors = true
 
+-- empty setup using defaults
+require("nvim-tree").setup()
+
+local nvim_tree_events = require('nvim-tree.events')
+local bufferline_api = require('bufferline.api')
+
+local function get_tree_size()
+  return require'nvim-tree.view'.View.width
+end
+
+nvim_tree_events.subscribe('TreeOpen', function()
+  bufferline_api.set_offset(get_tree_size())
+end)
+
+nvim_tree_events.subscribe('Resize', function()
+  bufferline_api.set_offset(get_tree_size())
+end)
+
+nvim_tree_events.subscribe('TreeClose', function()
+  bufferline_api.set_offset(0)
+end)
+EOF
+
+colorscheme catppuccin
+
+let g:ale_fixers = {
+\   'javascript': ['prettier'],
+\   'css': ['prettier'],
+\}
+
+let g:ale_fix_on_save = 1
