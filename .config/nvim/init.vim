@@ -1,6 +1,9 @@
 " Line number settings
 set number
+set selection=exclusive
 highlight LineNr term=bold cterm=NONE ctermfg=DarkGrey ctermbg=NONE gui=NONE guifg=DarkGrey guibg=NONE
+autocmd FileType scss setl iskeyword+=@-@
+autocmd FileType ts,tsx,js,jsx,json,css,scss autocmd BufWritePre * :%s/\s\+$//e
 
 " Vim Key Bindings (START)
 let mapleader = ','
@@ -8,17 +11,20 @@ let mapleader = ','
 inoremap jk <Esc>
 
 nnoremap <C-n> :NvimTreeToggle<CR>
-nnoremap <C-p> :FZF<CR>
 
-nnoremap <silent> <A-h> <Cmd>BufferPrevious<CR>
-nnoremap <silent> <A-l> <Cmd>BufferNext<CR>
+" Telescope
+nnoremap <leader>ff <cmd>Telescope find_files<cr>
+nnoremap <leader>gg <cmd>Telescope live_grep<cr>
+nnoremap <leader>bb <cmd>Telescope buffers<cr>
+nnoremap <leader>hh <cmd>Telescope help_tags<cr>
 
-nnoremap <silent> <A-H> <Cmd>BufferMovePrevious<CR>
-nnoremap <silent> <A-L> <Cmd>BufferMoveNext<CR>
+" Tab management
+nnoremap <silent> <S-TAB> <Cmd>BufferPrevious<CR>
+nnoremap <silent> <TAB> <Cmd>BufferNext<CR>
 
-nnoremap <silent> <A-x> <Cmd>BufferClose<CR>
-nnoremap <silent> <A-X> <Cmd>BufferCloseAllButPinned<CR>
+nnoremap <leader>xx <cmd>BufferWipeout<CR>
 
+" Vim configuration shortcuts
 nnoremap <leader>ev :vsplit $MYVIMRC<cr>
 nnoremap <leader>sv :source $MYVIMRC<cr>
 nnoremap <leader>q :bd<cr>
@@ -41,7 +47,8 @@ Plug 'nvim-tree/nvim-web-devicons'
 Plug 'nvim-tree/nvim-tree.lua'
 Plug 'romgrk/barbar.nvim'
 
-Plug 'junegunn/fzf', { 'on': 'FZF' }
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.x' }
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
 Plug 'elzr/vim-json', { 'for': 'json' }
@@ -87,6 +94,7 @@ colorscheme catppuccin
 
 let g:ale_fixers = {
 \   'javascript': ['prettier'],
+\   'typescript': ['prettier'],
 \   'css': ['prettier'],
 \}
 
