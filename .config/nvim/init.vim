@@ -25,7 +25,7 @@ nnoremap <silent> <TAB> <Cmd>BufferNext<CR>
 nnoremap <leader>xx <cmd>BufferWipeout<CR>
 
 " Vim configuration shortcuts
-nnoremap <leader>ev :vsplit $MYVIMRC<cr>
+nnoremap <leader>ev :edit $MYVIMRC<cr>
 nnoremap <leader>sv :source $MYVIMRC<cr>
 nnoremap <leader>q :bd<cr>
 nmap <leader>ss :source %<cr>
