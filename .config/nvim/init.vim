@@ -23,6 +23,7 @@ nnoremap <silent> <S-TAB> <Cmd>BufferPrevious<CR>
 nnoremap <silent> <TAB> <Cmd>BufferNext<CR>
 
 nnoremap <leader>xx <cmd>BufferWipeout<CR>
+nnoremap <leader>XX <cmd>bufdo bwipeout<CR>
 
 " Vim configuration shortcuts
 nnoremap <leader>ev :edit $MYVIMRC<cr>
