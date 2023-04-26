@@ -3,7 +3,7 @@ set number
 set selection=exclusive
 highlight LineNr term=bold cterm=NONE ctermfg=DarkGrey ctermbg=NONE gui=NONE guifg=DarkGrey guibg=NONE
 autocmd FileType scss setl iskeyword+=@-@
-autocmd FileType ts,tsx,js,jsx,json,css,scss autocmd BufWritePre * :%s/\s\+$//e
+autocmd FileType ts,tsx,js,jsx,json,css,scss,html autocmd BufWritePre * :%s/\s\+$//e
 
 " Vim Key Bindings (START)
 let mapleader = ','
@@ -14,9 +14,9 @@ nnoremap <C-n> :NvimTreeToggle<CR>
 
 " Telescope
 nnoremap <leader>ff <cmd>Telescope find_files<cr>
-nnoremap <leader>gg <cmd>Telescope live_grep<cr>
-nnoremap <leader>bb <cmd>Telescope buffers<cr>
-nnoremap <leader>hh <cmd>Telescope help_tags<cr>
+nnoremap <leader>fg <cmd>Telescope live_grep<cr>
+nnoremap <leader>fb <cmd>Telescope buffers<cr>
+nnoremap <leader>fh <cmd>Telescope help_tags<cr>
 
 " Tab management
 nnoremap <silent> <S-TAB> <Cmd>BufferPrevious<CR>
@@ -43,6 +43,11 @@ Plug 'tpope/vim-sleuth'
 Plug 'github/copilot.vim'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-fugitive'
+Plug 'jiangmiao/auto-pairs'
+Plug 'MaxMEllon/vim-jsx-pretty'
+Plug 'suy/vim-context-commentstring'
+Plug 'leafgarland/typescript-vim'
 
 Plug 'nvim-tree/nvim-web-devicons'
 Plug 'nvim-tree/nvim-tree.lua'
@@ -51,8 +56,6 @@ Plug 'romgrk/barbar.nvim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.x' }
 Plug 'christoomey/vim-tmux-navigator'
-Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
-Plug 'elzr/vim-json', { 'for': 'json' }
 Plug 'catppuccin/nvim', { 'as': 'catppuccin' }
 
 call plug#end()
@@ -69,7 +72,23 @@ vim.g.loaded_netrwPlugin = 1
 -- vim.opt.termguicolors = true
 
 -- empty setup using defaults
-require("nvim-tree").setup()
+require("nvim-tree").setup({
+  git = {
+    ignore = false,
+  },
+  actions = {
+    open_file = {
+      quit_on_open = true,
+    },
+  },
+  modified = {
+    enable = true,
+  },
+  renderer = {
+    highlight_opened_files = "all",
+    highlight_modified = "all",
+  }
+})
 
 local nvim_tree_events = require('nvim-tree.events')
 local bufferline_api = require('bufferline.api')
@@ -95,8 +114,13 @@ colorscheme catppuccin
 
 let g:ale_fixers = {
 \   'javascript': ['prettier'],
+\   'javascriptreact': ['prettier'],
 \   'typescript': ['prettier'],
+\   'typescriptreact': ['prettier'],
 \   'css': ['prettier'],
+\   'scss': ['prettier'],
+\   'json': ['prettier'],
+\   'html': ['prettier'],
 \}
 
 let g:ale_fix_on_save = 1
